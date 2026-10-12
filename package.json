@@ -1,8 +1,16 @@
 {
   "name": "dsh-prompt-optimizer",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "DeepSeek Harness 提示词智能优化与思考强度动态自适应插件",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liushQAQ/dsh-prompt-optimizer.git"
+  },
+  "homepage": "https://github.com/liushQAQ/dsh-prompt-optimizer#readme",
+  "bugs": {
+    "url": "https://github.com/liushQAQ/dsh-prompt-optimizer/issues"
+  },
   "type": "module",
   "main": "lib/index.js",
   "exports": {

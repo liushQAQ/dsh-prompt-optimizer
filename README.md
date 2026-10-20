@@ -12,7 +12,7 @@
 1. **🔒 绝对主模型控制权**：
    * 无论如何优化，**用户在 DSH 选中的主力模型（Provider / Model）100% 保持不变**，坚决不越权替换底层会话模型。
 2. **🔄 灵活双模型来源 (DSH 原生配置 / 自定义第三方)**：
-   * **DSH 已配置模型（免密免填，首推）**：直接读取 DSH 中已绑定的服务商与模型（如 SiliconFlow、Agnes、DeepSeek 官方等），用户无需再次输入 API Key 或 Base URL，在下拉列表中点选即可！
+   * **DSH 已配置模型（免密免填，首推）**：直接读取 DSH 中已绑定的服务商与模型（如 SiliconFlow、Agnes、DeepSeek 官方等），用户无需再次输入 API Key 或 Base URL，在下拉列表中点选即可！auto 模式优先继承当前会话活跃主模型，并在遭遇无效密钥或接口异常时自动平滑轮询备选模型自愈。
    * **自定义第三方模型**：自由填入任意 OpenAI 兼容端点（如自建 vLLM、Ollama、OneAPI 等）及自定义 Key。
 3. **⚡ 轻量极速提示词重构**：
    * 借助高速优化模型（如 `Qwen/Qwen3-30B-A3B-Instruct-2507`、`deepseek-ai/DeepSeek-V3`、`agnes-2.5-flash` 等），一键将简略口语草稿扩充为高质量、结构化的专业级 Prompt。

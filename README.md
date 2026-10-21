@@ -34,6 +34,26 @@
 
 ---
 
+## 📦 安装
+
+本插件不发布到 npm，统一走 GitHub 源安装。在你的 DSH Profile 目录（如 `~/.dsh/profiles/desktop`）下执行：
+
+```bash
+# pnpm（推荐）
+pnpm add github:liushQAQ/dsh-prompt-optimizer
+
+# 或 npm
+npm i github:liushQAQ/dsh-prompt-optimizer
+```
+
+装完后确认 profile 的 `package.json` 中 `dsh.profile.bundles` 已包含 `dsh-prompt-optimizer`，然后重启 DSH Desktop 使插件注册生效。
+
+**环境要求**：Node.js >= 20、DSH >= 0.1.0、`@deepseek-ai/cordis` >= 4.0.0。
+
+安装后无需额外配置即可使用：默认从 DSH 已配置的模型里挑选优化模型（免密免填）；如需指定第三方端点，见下方「配置说明」。
+
+---
+
 ## 📸 界面效果
 
 * **会话输入框**：输入简略提问，点击右侧 `✨ 优化提示词` 按钮，自动将内容扩充重构为结构清晰的专业 Prompt，并显示匹配的复杂度徽标（如 `low` / `medium` / `high` / `max`）。

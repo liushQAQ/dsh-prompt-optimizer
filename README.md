@@ -18,12 +18,29 @@
    * 借助高速优化模型（如 `Qwen/Qwen3-30B-A3B-Instruct-2507`、`deepseek-ai/DeepSeek-V3`、`agnes-2.5-flash` 等），一键将简略口语草稿扩充为高质量、结构化的专业级 Prompt。
 4. **🧠 思考强度动态自适应 (Auto Reasoning Effort)**：
    * 结合用户意图与任务复杂度分析，动态将主模型的思考强度自适应设置为 `low` / `medium` / `high` / `max`，省时省算力。
-5. **🎨 极简精致交互 (Composer Capsule)**：
-   * 在 DSH 会话输入框右侧内嵌精致胶囊控制条：SVG 极简矢量「✨ 优化」按钮与「⚙️ 快速设置」齿轮。
+5. **🎨 极简精致交互 (Header Capsule)**：
+   * 在 DSH **会话头部按钮区**（标题行：智能体团队 / 创造模式 那一排）内嵌精致胶囊控制条：SVG 极简矢量「✨ 优化」按钮与「⚙️ 快速设置」齿轮。
+   * **🔴 不占用会话框**：v1.5.0 起从 `conversation.input.right`（输入框右侧工具行）迁到 `conversation.session.header.actions`。原因见下方「布局规范」——旧位置会把官方模型选择器挤到 5px 宽、标签宽 0，用户完全看不见模型按钮。
    * **↩️ 一键撤销还原**：优化后随时一键无损撤回原始内容（悬浮提示原内容摘要）。
    * **🔄 重新优化**：基于原始输入一键重新生成新的润色版本（自动跳过本地缓存）。
    * **⌨️ 极客快捷键支持**：按下 `Ctrl + Alt + O`（macOS: `Cmd + Option + O`）无需触碰鼠标即可秒级触发优化。
    * **⚡ 本地 LRU 缓存加速**：内置 25 条内存级结果缓存，短时间内重复优化 0ms 响应且零消耗 Token。
+
+---
+
+## 📐 布局规范（所有 DSH 插件必须遵守）
+
+> 铁律一句话：**插件永远不占会话框（composer）的位置，永远不压缩原生按钮的空间。**
+> 插件要有 UI，去自己的地盘（会话头部 / 卡片下方 dock / 面板 / 独立浮层）。
+
+| | |
+|---|---|
+| ⛔ **禁止** `slots.inject` | `conversation.input.left`、`conversation.input.right`、`conversation.input.model`（叠加）、`conversation.input.model.label`、`conversation.input.overlay` / `.attachments` / `.plan` / `.permission`、`conversation.composer.bar` |
+| ✅ **推荐** `slots.inject` | `conversation.session.header.actions`（**首选**，会话标题行右侧）、`conversation.session.header.utilities`、`conversation.session.header.corner`、`conversation.composer.dock`、`shell.overlay`、`settings.section` |
+| ⚠️ **陷阱** | `conversation.session.header.actions` **只在有会话时声明**——新会话空态该 slot 不存在，验证必须打开真实会话，否则会误判「注册成功但不渲染」 |
+| ⚠️ **陷阱** | single slot 同 priority 只能一个注册者；要接管必须显式 `priority: -1` |
+
+**适用范围**：不区分使用者、不区分机器、不区分渠道——任何玩家装同一个包，得到同样的合规位置。
    * **🛡️ 提示词注入防御与安全定界**：严格使用 `<raw_user_prompt>` 标签隔离待优化语料，杜绝指令越狱与恶意覆写；设置 4000 字符防护截断，防止 Token 溢出。
    * 支持一键弹窗即时切换模型来源、选配模型与调试连接，无需跳转设置页即可全局配置。
 6. **🎛️ 完整图形化配置界面**：
@@ -63,9 +80,9 @@ npm i github:liushQAQ/dsh-prompt-optimizer
 
 ## ⚙️ 配置说明
 
-### 方式一：输入框右侧胶囊弹窗（随时就地配置）
+### 方式一：会话头部胶囊弹窗（随时就地配置）
 
-在会话输入框右侧的胶囊组件中点击 `⚙️` 齿轮按钮，即可呼出毛玻璃快捷配置面板，支持随时切换模型来源（DSH 已配置模型 / 自定义第三方）并测试连通性，保存后全量生效。
+在**会话头部**（标题行右侧）的胶囊组件中点击 `⚙️` 齿轮按钮，即可呼出毛玻璃快捷配置面板，支持随时切换模型来源（DSH 已配置模型 / 自定义第三方）并测试连通性，保存后全量生效。
 
 ### 方式二：DSH 图形化界面
 
